@@ -42,7 +42,7 @@ React ile temel olarak:
 konularını öğreniyorum.
  
  
-## 🤖 Chatbot Project
+##  Chatbot Project
  
 React öğrenme sürecinde geliştirdiğim temel uygulama örneği. Chatbot içerisinde şu konuları uyguladım:
  
