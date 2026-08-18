@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopping Website</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+    function InputForm({addProduct}){
+
+        const [input,setInput] = React.useState("");
+
+
+        function HandleAddProduct(){
+            if(input === ""){
+                return;
+            }
+            addProduct(input);
+            setInput(" ");
+        }
+
+        return(
+            <>
+                <input 
+                    placeholder="Ürün ekle"
+                    onChange={(event) => {setInput(event.target.value)}}
+                />
+
+                <button onClick={HandleAddProduct}>Ekle</button>
+            </>
+        );
+
+    }
+
+    function ProductList({products,checkProduct,deleteProduct}){
+        
+
+        return(
+            <div>
+                {products.map((product) => {
+                    return(
+                        <Product
+                            key={product.id}
+                            id={product.id}
+                            name={product.name}
+                            completed={product.completed}
+                            checkProduct={checkProduct}
+                            deleteProduct={deleteProduct}
+                        />
+        );})}
+            </div>
+        );
+
+    }
+
+    function Product({id,name,completed,checkProduct,deleteProduct}){
+        
+        return(
+            <div>
+                <input type="checkbox" checked={completed}
+                onChange={() => checkProduct(id)}/>
+                <span
+                style={{
+                        textDecoration: completed ? "line-through" : "none"
+                    }}>{name}</span>
+                {completed && <span>Alındı</span>}
+                <button onClick={() => deleteProduct(id)}>Sil</button>
+            </div>
+        );
+    }
+
+    function FilteredProduct({setFilter}){
+        
+        return(
+            <>
+                <button onClick={(event) => setFilter("all")}> Tümü </button>
+                <button onClick={(event) => setFilter("active")}> Alınacak </button>
+                <button onClick={(event) => setFilter("completed")}> Alındı </button>
+            </>
+        );
+    }
+
+    function App() {
+
+        const [products,setProducts] = React.useState(
+            [
+                {
+                    id:"id1",
+                    name:"Süt",
+                    completed:false
+                },
+                                {
+                    id:"id2",
+                    name:"Ekmek",
+                    completed:false
+                },
+                                {
+                    id:"id3",
+                    name:"Yumurta",
+                    completed:false
+                }
+            ]
+        );
+
+        function addProduct(name){
+
+            const newProduct = {
+                id:Date.now(),
+                name:name,
+                completed:false
+            }
+
+            setProducts([...products,newProduct])
+        }
+
+        function checkProduct(id){
+            setProducts(products.map((product) => {
+                if(product.id === id){
+                    return({
+                        ...product,
+                        completed:!product.completed}
+                    );
+
+                }
+                return product;
+            }))
+
+        }
+
+        const [filter,setFilter] = React.useState("all");
+
+        let filteredProducts = products;
+
+        if (filter === "active") {
+            filteredProducts = products.filter(product => !product.completed);
+        }
+
+        if (filter === "completed") {
+            filteredProducts = products.filter(product => product.completed);
+        }
+
+        function deleteProduct(id){
+            setProducts(products.filter((product) => product.id !== id))
+
+        }
+
+        const totalCount = products.length;
+
+        const completedCount = products.filter(
+        product => product.completed
+        ).length;
+
+        const activeCount = products.filter(
+        product => !product.completed
+        ).length;
+    
+        return(
+            <>
+                <h1>Shopping List</h1>
+                <InputForm addProduct={addProduct}/>
+                <ProductList products={filteredProducts} checkProduct={checkProduct} deleteProduct={deleteProduct}/>
+                <FilteredProduct setFilter={setFilter}/>
+                <p>Toplam:{totalCount} ürün</p>
+                <p>Alınan:{completedCount} ürün</p>
+                <p>Kalan:{activeCount} ürün</p>
+            </>
+        );
+
+    }
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App/>);
+    </script>
+  </body>
+</html>
