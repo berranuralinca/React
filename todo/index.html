@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+
+    function TodoForm({addTodo}){
+
+        const [input,setInput] =React.useState("");  
+
+        // function SaveInput(event){
+        //     setInput(event.target.value)
+        // }
+
+        function handleAddTodo(){
+            if(input === ""){
+                return;
+            }
+
+            addTodo(input);
+
+            setInput("");
+        }
+
+        return(
+        <div>
+            <input 
+            placeholder="Görev ekle"
+            onChange={(event) => setInput(event.target.value)}
+            />
+            <button onClick={handleAddTodo}>Ekle</button>
+        </div>
+    );}
+
+    function TodoItem({id,text,completed,toogleTodo}){
+
+        return(
+            <div>
+                <input 
+                type="checkbox"
+                checked={completed}
+                onChange={() => toogleTodo(id)}
+                />
+                <span
+                    style={{
+                        textDecoration: completed ? "line-through" : "none"
+                    }}
+                >{text}</span>
+                {completed && <span> tamamlandı</span>}
+            </div>
+        );
+    }
+
+    function TodoList({todos,toogleTodo}){
+
+        return (
+            <>
+            {todos.map((todo) => {
+                return (
+                <TodoItem
+                    key={todo.id}
+                    id={todo.id}
+                    text={todo.text}
+                    completed={todo.completed}
+                    toogleTodo={toogleTodo}   
+                />
+                );
+            })}
+            </>
+        );
+    }
+
+    function TodoFilter({setFilter}){
+        return(
+            <>
+                <button onClick={() => setFilter("all")}>Tümü</button>
+                <button onClick={() => setFilter("active")}>Aktif</button>
+                <button onClick={() => setFilter("completed")}>Tamamlandı</button>
+            </>
+        );
+    }
+
+    function App() {
+
+
+
+        const [todos,setTodos] = React.useState([
+            {
+                id:"id1",
+                text:"React öğren",
+                completed:false
+            },
+                    {
+                id:"id2",
+                text:"Javascript öğren",
+                completed:false
+            },
+                    {
+                id:"id3",
+                text:"Proje yap",
+                completed:false
+            }
+        ]);
+
+        const [filter,setFilter] = React.useState("all");
+
+        let filteredTodos = todos;
+
+        if (filter === "active") {
+            filteredTodos = todos.filter(todo => !todo.completed);
+        }
+
+        if (filter === "completed") {
+            filteredTodos = todos.filter(todo => todo.completed);
+        }
+        
+        function addTodo(text){
+
+            const newTodo = {
+                id:Date.now(),
+                text:text,
+                completed:false
+            }
+
+            setTodos([...todos,newTodo]);
+        }
+
+        function toogleTodo(id){
+            setTodos(
+                todos.map((todo) => {
+                    if(todo.id === id){
+                        return{
+                            ...todo,
+                            completed:!todo.completed
+                        }
+                    }
+                    return todo;
+                })
+            );
+        }
+
+
+    return (
+        <div>
+        <h1>Todo App</h1>
+        <TodoForm addTodo={addTodo}/>
+        <TodoList todos={filteredTodos} toogleTodo={toogleTodo}/>
+        <TodoFilter setFilter={setFilter}/>
+        </div>
+    );}
+
+      const container = document.querySelector('.js-container');
+      ReactDOM.createRoot(container).render(<App/>);
+    </script>
+  </body>
+</html>
