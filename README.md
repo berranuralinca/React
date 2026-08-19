@@ -81,11 +81,16 @@ App
  
 ```
 React/
-│
+│__ chatbot/
+|
 ├── exercise 1/
 ├── exercise 2 components/
 ├── exercise 3 eventHandler/
 |__ exercise 4 hooks/
+|
+|__shopping/
+|
+|__todo/
 │
 ├── chatbot.html
 ├── react-basic.html
@@ -93,7 +98,7 @@ React/
 ├── react-basics.js
 ├── state_eventHandlers.html
 |__ hooks.html
-│
+│__react-basics.js
 ├── robot.webp
 ├── user.webp
 │
