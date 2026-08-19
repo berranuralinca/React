@@ -1,0 +1,20 @@
+        .robot-div {
+        display: flex;
+        justify-content: start;
+        align-items: start;
+        }
+
+        .user-div {
+        display: flex;
+        justify-content: end;
+        align-items: start;
+        }
+
+        .message-div {
+        background-color: rgb(237, 237, 237);
+        padding: 15px 20px;
+        border-radius: 10px;
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        }
