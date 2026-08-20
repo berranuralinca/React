@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Chatbot from "supersimpledev/chatbot.js";
-import "./ChatInput.css"
+import "./ChatInput.css";
 
 function ChatInput({ chatMessages, setChatMessages }) {
 
@@ -28,7 +28,7 @@ function ChatInput({ chatMessages, setChatMessages }) {
             {
                 message: response,
                 sender: "robot",
-                id: crypto.randomUUID()
+            id: crypto.randomUUID()
             }
         ]);
 

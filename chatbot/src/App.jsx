@@ -1,7 +1,8 @@
 import "./App.css";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import ChatMessages from "./components/ChatMessages.jsx";
 import ChatInput from "./components/ChatInput.jsx";
+import {Chatbot} from "supersimpledev";
 
 function App() {
 
@@ -27,6 +28,18 @@ function App() {
             id: "id4"
         }
     ]);
+
+    useEffect(() => {
+            Chatbot.addResponses({
+            'goodbye': 'Goodbye. Have a great day!',
+            'give me a unique id': function() {
+                return `Sure! Here's a unique ID: ${crypto.randomUUID()}`;
+            },
+            "kalabilirim":"ya da gidebilirim",
+            "kafama göre kararım":"değişebilir",
+            "tam aklıma geldiğin anda":"fikrimden bile cayabilirim"
+            });
+    })
 
     return (
         <div className="app-div">

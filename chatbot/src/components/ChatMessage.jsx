@@ -1,8 +1,8 @@
 import robotImage from "../assets/robot.webp";
-import userImage from "../assets/user.webp";
-import "./ChatMessage.css"
+import UserMeImage from "../assets/user_me.jpeg";
+import "./ChatMessage.css";
 
-function ChatMessage({ message, sender }) {
+function ChatMessage({ message, sender}) {
 
     return (
         <div className={sender === "robot" ? "robot-div" : "user-div"}>
@@ -20,8 +20,8 @@ function ChatMessage({ message, sender }) {
             </div>
 
             {sender === "user" && (
-                <img
-                    src={userImage}
+                <img className="user-img"
+                    src={UserMeImage}
                     width="50"
                     alt="User"
                 />
